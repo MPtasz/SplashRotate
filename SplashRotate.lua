@@ -1,3 +1,31 @@
+-- =============================================================================
+--
+--  ____  _                __        __                
+-- |  _ \| |_ __ _ __  ____\ \      / /__ _ _ __ ___  
+-- | |_) | __/ _` / __|_  / \ \ /\ / / _` | '__/ _ \ 
+-- |  __/| || (_| \__ \/ /   \ V  V / (_| | | |  __/ 
+-- |_|    \__\__,_|___/___|   \_/\_/ \__,_|_|  \___|
+--
+--
+--  PtaszWare
+--  by: Mark Ptaszynski
+--  Copyright: March, 2026
+--  Version: 1.0.0
+--
+-- =============================================================================
+--
+-- License GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+--
+-- This program is free software: you can redistribute it and/or modify it under
+-- the terms of the GNU General Public License as published by the Free Software
+-- Foundation, either version 3 of the License, or (at your option) any later
+-- version.
+--
+-- This program is distributed in the hope that it will be useful, but WITHOUT ANY
+-- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+-- A PARTICULAR PURPOSE. See the GNU General Public License for more details
+--
+-- =============================================================================
 -- SplashRotate.lua
 -- Each run does exactly two file operations:
 --   1. Archive current splash.png -> splash(highest+1).png
@@ -8,7 +36,7 @@
 -- (string.format("%02d", 100) = "100" - minimum width, not fixed width).
 --
 -- Place in /SCRIPTS/TOOLS/  Run from EdgeTX Tools menu.
--- EdgeTX 2.11.5 / Lua Reference 2.11
+-- EdgeTX 2.11.5 / EdgeTX Lua Reference 2.11
 
 local IMG_DIR = "/images"
 local BASE    = "splash"
@@ -16,8 +44,6 @@ local EXT     = ".png"
 local MAX_N   = 999      -- supports up to splash999.png
 
 local exitApp = false
-
--- ---- helpers ---------------------------------------------------------------
 
 local function imgPath(n)
   if n == 0 then
@@ -69,8 +95,6 @@ local function doRotate()
     end
   end
 
-  -- find highest: scan forward from lowest, stop at first gap.
-  -- files are always contiguous so this is just archive_size more calls.
   local highest = lowest
   if lowest > 0 then
     for n = lowest + 1, MAX_N do
