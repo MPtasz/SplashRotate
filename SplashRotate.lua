@@ -144,6 +144,36 @@ local function doRotate()
   return "Active: " .. promotedName .. "  Archive: " .. archiveCount .. " file(s)"
 end
 
+-- ---- renumbering logic -----------------------------------------------------------
+-- the 'doCleanup()' function collects all the 'splashNN.png' files and renumbers
+-- them from 'splash01.png' - t also stores the status label references so the cleanup
+-- button can update it in place - the 'Archive Cleanup' button will be alongside 'Close'
+-- ------------------------------------------------------------------------------------
+ 
+local function doCleanup()
+  local files = {}
+  for n = 1, MAX_N do
+    if exists(imgPath(n)) then
+      files[#files + 1] = n
+    end
+  end
+  if #files == 0 then
+    return "No numbered splash files to renumber."
+  end
+  for i, oldN in ipairs(files) do
+    local newN = i
+    if oldN ~= newN then
+      local ok, err = renameFile(imgPath(oldN), imgPath(newN))
+      if not ok then
+        return "ERR renaming splash" .. string.format("%02d", oldN) ..
+               ": " .. tostring(err)
+      end
+    end
+  end
+  return "Renumbered " .. #files .. " file(s): splash01.." ..
+         string.format("%02d", #files) .. ".png"
+end
+
 -- ---- init ------------------------------------------------------------------
 -- Work happens here: two file copies at most, so Loading... is brief.
 -- Then the LVGL result page is built and displayed.
@@ -160,7 +190,21 @@ local function init()
     back     = function() exitApp = true end,
   })
 
-  pg:label({
+  -- pg:label({
+    -- x    = 10,
+    -- y    = 10,
+    -- text = status,
+  -- })
+
+  -- pg:button({
+    -- x     = 10,
+    -- y     = 50,
+    -- w     = 120,
+    -- text  = "Close",
+    -- press = function() exitApp = true end,
+  -- })
+
+  local lbl = pg:label({
     x    = 10,
     y    = 10,
     text = status,
@@ -169,10 +213,23 @@ local function init()
   pg:button({
     x     = 10,
     y     = 50,
+    w     = 150,
+    text  = "Archive Cleanup",
+    press = function()
+      local ok2, res2 = pcall(doCleanup)
+      local msg = ok2 and res2 or ("LUA ERR: " .. tostring(res2))
+      lbl:set({ text = msg })
+    end,
+  })
+
+  pg:button({
+    x     = 170,
+    y     = 50,
     w     = 120,
     text  = "Close",
     press = function() exitApp = true end,
   })
+
 end
 
 -- ---- run -------------------------------------------------------------------
