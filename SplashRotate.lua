@@ -45,6 +45,9 @@ local MAX_N   = 999      -- supports up to splash999.png
 
 local exitApp = false
 
+local statusLbl = nil
+local cleanupPending = false
+
 local function imgPath(n)
   if n == 0 then
     return IMG_DIR .. "/" .. BASE .. EXT
@@ -141,13 +144,24 @@ local function doRotate()
 
   -- archive count = files remaining as splashNN (lowest has been promoted)
   local archiveCount = highest - lowest
-  return "Active: " .. promotedName .. "  Archive: " .. archiveCount .. " file(s)"
+  return "Active: " .. promotedName .. "     Archive: " .. archiveCount .. " file(s)     Highest #: " .. highest .. ""
 end
 
--- ---- renumbering logic -----------------------------------------------------------
+-- ---- cleanup renumbering logic -----------------------------------------------------------
 -- the 'doCleanup()' function collects all the 'splashNN.png' files and renumbers
 -- them from 'splash01.png' - t also stores the status label references so the cleanup
 -- button can update it in place - the 'Archive Cleanup' button will be alongside 'Close'
+--
+-- Rename order is safe — since new numbers are always lower than old ones (e.g. splash50
+-- is renamed to splash01), there's never a collision with an existing file during the loop
+--
+-- if oldN == newN the file is already in the right place; renameFile is not called
+--
+-- lbl:set({text = msg}) updates the label in-place after cleanup without needing to rebuild
+-- the page — the result of the cleanup replaces the rotation status message on screen
+--
+-- splash.png is untouched — doCleanup() only iterates n = 1, MAX_N, so the active splash
+-- is never touched
 -- ------------------------------------------------------------------------------------
  
 local function doCleanup()
@@ -204,7 +218,33 @@ local function init()
     -- press = function() exitApp = true end,
   -- })
 
-  local lbl = pg:label({
+  -- local lbl = pg:label({
+    -- x    = 10,
+    -- y    = 10,
+    -- text = status,
+  -- })
+
+  -- pg:button({
+    -- x     = 10,
+    -- y     = 50,
+    -- w     = 150,
+    -- text  = "Archive Cleanup",
+    -- press = function()
+      -- local ok2, res2 = pcall(doCleanup)
+      -- local msg = ok2 and res2 or ("LUA ERR: " .. tostring(res2))
+      -- lbl:set({ text = msg })
+    -- end,
+  -- })
+
+  -- pg:button({
+    -- x     = 170,
+    -- y     = 50,
+    -- w     = 120,
+    -- text  = "Close",
+    -- press = function() exitApp = true end,
+  -- })
+
+  statusLbl = pg:label({
     x    = 10,
     y    = 10,
     text = status,
@@ -213,34 +253,69 @@ local function init()
   pg:button({
     x     = 10,
     y     = 50,
-    w     = 150,
-    text  = "Archive Cleanup",
-    press = function()
-      local ok2, res2 = pcall(doCleanup)
-      local msg = ok2 and res2 or ("LUA ERR: " .. tostring(res2))
-      lbl:set({ text = msg })
-    end,
-  })
-
-  pg:button({
-    x     = 170,
-    y     = 50,
     w     = 120,
     text  = "Close",
     press = function() exitApp = true end,
   })
 
+  pg:button({
+    x     = 140,
+    y     = 50,
+    w     = 150,
+    text  = "Archive Cleanup",
+    press = function()
+      statusLbl:set({ text = "Renumbering, please wait..." })
+      cleanupPending = true
+    end,
+  })
+
+  pg:label({
+    x    = 10,
+    y    = 100,
+    text = "'Archive Cleanup' renumbers all archived splash files back to\n" ..
+           "splash01..NN, preventing the counter from reaching the " .. MAX_N .. "\n" ..
+           "max renumbering limit and halting the rotation and renaming\n" ..
+		   "logic. This prevents the script from crashing and should be\n" ..
+		   "done before the 'Highest #' above reaches " .. MAX_N .. ".",
+  })
+
+  -- The MAX_N variable above is embedded live so if you ever change the limit at the
+  -- top of the script 'local MAX_N   = 999' the help text stays accurate automatically
+
 end
 
 -- ---- run -------------------------------------------------------------------
 
+-- local function run(event, touchState)
+  -- if lvgl == nil then
+    -- lcd.clear()
+    -- lcd.drawText(10, 20, "Splash Rotator",         MIDSIZE)
+    -- lcd.drawText(10, 50, "Requires EdgeTX v2.11+", 0)
+    -- if event == EVT_VIRTUAL_EXIT then return 2 end
+    -- return 0
+  -- end
+  -- if exitApp then return 2 end
+  -- return 0
+-- end
+
+-- the 'Archive Cleanup' button press handler sets the label to "Renumbering, please wait..."
+-- and sets the flag, then returns immediately — giving LVGL one full frame to render the
+-- updated text - the actual doCleanup() work is deferred to the next run() call, so the user
+-- sees the message before the freeze rather than after
+
 local function run(event, touchState)
   if lvgl == nil then
     lcd.clear()
-    lcd.drawText(10, 20, "Splash Rotator",         MIDSIZE)
+    lcd.drawText(10, 20, "Splash Rotator", MIDSIZE)
     lcd.drawText(10, 50, "Requires EdgeTX v2.11+", 0)
     if event == EVT_VIRTUAL_EXIT then return 2 end
     return 0
+  end
+  if cleanupPending then
+    cleanupPending = false
+    local ok2, res2 = pcall(doCleanup)
+    local msg = ok2 and res2 or ("LUA ERR: " .. tostring(res2))
+    statusLbl:set({ text = msg })
   end
   if exitApp then return 2 end
   return 0
