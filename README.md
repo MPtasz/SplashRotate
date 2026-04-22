@@ -1,4 +1,4 @@
-# SplashRotate
+te# SplashRotate
 
 ![PtaszWare Logo](https://github.com/MPtasz/SplashRotate/blob/main/assets/logos/PtasWareLogo190x197.png)
 
