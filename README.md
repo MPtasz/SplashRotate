@@ -24,7 +24,7 @@ The 'TOOLS' menu will now have a 'SplashRotate' button, click the button to run 
 
 Radio Menu → Tools → SplashRotate
 
--- ![Tools/PilotInfo](https://github.com/MPtasz/PilotInfo/blob/main/assets/screenshots/ToolsPilotInfo.png)
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/screenshots/ToolsSplashRotate.png)
 
   - the script now opens with a view screen
   
