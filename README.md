@@ -31,24 +31,27 @@ Radio Menu → Tools → SplashRotate
 
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/ToolsSplashRotate.png)
 
-  - click the 'SplashRotate' button to run the script
-  - after a breif 'Loading...' screen the the script will display the following screen.
+  - Click the 'SplashRotate' button to run the script.
+  - After a breif 'Loading...' screen the the script will display the following screen.
+  - The 'Close' button will end the script and return to the 'Tools' menu'
   
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateDisplay.png)  
   
-  - the 'Active' file name is the file that is the current splash screen
-  - the 'Archive' number is the total number of splash screens in the rotatioon
-  - the 'Highest' number is the number of the highest splash screen
-  - the 'Highest' number is increased by 1 every time the scrip is run
-  - if the splaash files are named 'splash01.png' thru 'splash10.png' and the 'SplashRotate' script is run, the files
+  - The 'Active' file name is the file that is the current splash screen.
+  - The 'Archive' number is the total number of splash screens in the rotation.
+  - The 'Highest' number is the number of the highest splash screen.
+  - The 'Highest' number is increased by 1 every time the script is run.
+  - If the splaash files are named 'splash01.png' thru 'splash10.png' and the 'SplashRotate' script is run, the files
   will then be named 'splash02.png' thru 'splash11.png'. This rotation continues each time the 'SplashRotate' script is run.
-  The highest number that the scripty can use is 999. The rotation number sshould be reset before this number is reached
+  The highest number that the script can handle is 999. The rotation number sshould be reset before this number is reached
+  by clicking the 'ArchiveCleanup' button.
+  - This script will function with any number of splash screens as long as the highest number does not exceed 1000.  
   
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateArchiveDisplay.png)     
   
-  - press SAVE to write changes to the SD card
+  - Click the 'ArchiveCleanup' button to reset the rotation numbers back to their lowest numbers.
+  - for example is there are 10 splash screen files, they will be re-numbered 'splash01.png' thru 'splash10.png'
+  after the 'ArchiveCleanup' button is pressed.
+  - The 'Renumbered' field tells you how many splash screens are on your radio and what they have been re-numbered to.
   
-![Tools/PilotInfo](https://github.com/MPtasz/PilotInfo/blob/main/assets/screenshots/PilotInfoSaved.png)     
-  
-  - press the EdgeTX logo (top-left) or CLOSE to exit
-  - if there are unsaved changes a prompt will ask to confirm
+
