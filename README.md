@@ -14,7 +14,12 @@ EdgeTX allows a splash screen ('splash.png' in the SD Card 'images' folder) to b
 This script allows the user to rotate between multiple splash screens that are named 'splashxx.png' where
 'xx' is any 2 digit number.
 
-For example if the user had 10 different splash screens named 'splash01.png' thru 'splash10.png'
+For example if the user had 10 different splash screens (in the 'images' folder on the SD card) named 'splash01.png'
+thru 'splash10.png', running the script 'SplashRotateLua' will copy 'splash01.png' to 'splash.png' (this will then be the next splash screeen to
+be displayed on the next powerup). 'splash01.png' is then renamed to highest number + 1. In this example it
+will be renamed 'splash11.png'. (The lowest number splash screen will become the next 'splash.png' and the lowest
+splash screen will then be renamed to the higest number +1.)
+
 ## INSTALLATION
 
 Copy the SplashRotate.lua file to /SCRIPTS/TOOLS/SplashRotate.lua  (on the radio's SD card).
@@ -26,15 +31,12 @@ Radio Menu → Tools → SplashRotate
 
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/ToolsSplashRotate.png)
 
-  - the script now opens with a view screen
+  - click the 'SplashRotate' button to run the script
+  - after a breif 'Loading...' screen the the script will display the following screen.
   
-![Tools/PilotInfo](https://github.com/MPtasz/PilotInfo/blob/main/assets/screenshots/PilotInfoDisplay.png)  
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/screenshots/SplashRotateDisplay.png)  
   
-  - if PilotInfo.txt does not exist the file will be created
-    and all fields start empty
-  - press EDIT to fill them in and press SAVE to create/save the file
-  - all fields are editable at any time on the EDIT acressn
-  - tap (or navigate to) any text field and press ENTER to open the EdgeTX virtual keyboard
+  
   
 ![Tools/PilotInfo](https://github.com/MPtasz/PilotInfo/blob/main/assets/screenshots/PilotInfoEdit.png)     
   
