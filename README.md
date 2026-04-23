@@ -34,7 +34,7 @@ Radio Menu → Tools → SplashRotate
   - click the 'SplashRotate' button to run the script
   - after a breif 'Loading...' screen the the script will display the following screen.
   
-![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/screenshots/SplashRotateDisplay.png)  
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateDisplay.png)  
   
   
   
