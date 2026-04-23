@@ -12,7 +12,7 @@
 
 EdgeTX allows a splash screen ('splash.png' in the SD Card 'images' folder) to be displayed on radio powerup.
 This script allows the user to rotate between multiple splash screens that are named 'splashxx.png' where
-'xx' is any 2 digit number.
+'xx' is any 2 digit number. (Note: The script will continue past number 99 and will actually work up to a rotation number of 999.)
 
 For example: if the user had 10 different splash screens (in the 'images' folder on the SD card) named 'splash01.png'
 thru 'splash10.png', running the script 'SplashRotate.Lua' will copy 'splash01.png' to 'splash.png' (this will then be the next splash screeen to
@@ -36,7 +36,7 @@ Radio Menu → Tools → SplashRotate
     
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateDisplay.png)  
 
-  - The 'Close' button will end the script and return to the 'Tools' menu'
+  - The 'Close' button will end the script and return to the 'Tools' menu.
   - The 'Active' file name is the file that is the current splash screen.
   - The 'Archive' number is the total number of splash screens in the rotation.
   - The 'Highest' number is the number of the highest splash screen.
@@ -50,7 +50,7 @@ Radio Menu → Tools → SplashRotate
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateArchiveDisplay.png)     
   
   - Click the 'ArchiveCleanup' button to reset the rotation numbers back to their lowest numbers.
-  - for example is there are 10 splash screen files, they will be re-numbered 'splash01.png' thru 'splash10.png'
+  - For example is there are 10 splash screen files, they will be re-numbered 'splash01.png' thru 'splash10.png'
   after the 'ArchiveCleanup' button is pressed.
   - The 'Renumbered' field tells you how many splash screens are on your radio and what they have been re-numbered to.
   
