@@ -15,9 +15,9 @@ This script allows the user to rotate between multiple splash screens that are n
 'xx' is any 2 digit number.
 
 For example: if the user had 10 different splash screens (in the 'images' folder on the SD card) named 'splash01.png'
-thru 'splash10.png', running the script 'SplashRotateLua' will copy 'splash01.png' to 'splash.png' (this will then be the next splash screeen to
+thru 'splash10.png', running the script 'SplashRotate.Lua' will copy 'splash01.png' to 'splash.png' (this will then be the next splash screeen to
 be displayed on the next powerup). 'splash01.png' is then renamed to highest number + 1. In this example it
-will be renamed 'splash11.png'. (The lowest number splash screen will become the next 'splash.png' and the lowest
+will be renamed 'splash11.png'. (The lowest number splash screen will become the next 'splash.png' and then the lowest
 splash screen will then be renamed to the higest number +1.)
 
 ## INSTALLATION
@@ -33,19 +33,19 @@ Radio Menu → Tools → SplashRotate
 
   - Click the 'SplashRotate' button to run the script.
   - After a breif 'Loading...' screen the the script will display the following screen.
-  - The 'Close' button will end the script and return to the 'Tools' menu'
-  
+    
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateDisplay.png)  
-  
+
+  - The 'Close' button will end the script and return to the 'Tools' menu'
   - The 'Active' file name is the file that is the current splash screen.
   - The 'Archive' number is the total number of splash screens in the rotation.
   - The 'Highest' number is the number of the highest splash screen.
   - The 'Highest' number is increased by 1 every time the script is run.
   - If the splaash files are named 'splash01.png' thru 'splash10.png' and the 'SplashRotate' script is run, the files
   will then be named 'splash02.png' thru 'splash11.png'. This rotation continues each time the 'SplashRotate' script is run.
-  The highest number that the script can handle is 999. The rotation number sshould be reset before this number is reached
+  The highest number that the script can handle is 999. The rotation number should be reset before this number is reached
   by clicking the 'ArchiveCleanup' button.
-  - This script will function with any number of splash screens as long as the highest number does not exceed 1000.  
+  - This script will function with any number of splash screens as long as the highest number does not reach 1000.  
   
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateArchiveDisplay.png)     
   
