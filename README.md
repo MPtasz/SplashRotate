@@ -6,54 +6,67 @@
 
 -  by: Mark Ptaszynski
 -  Copyright: March, 2026
--  Version: 1.1.0
+-  Version: 2.3.0
 
 ---
 
 EdgeTX allows a splash screen ('splash.png' in the SD Card 'images' folder) to be displayed on radio powerup.
 This script allows the user to rotate between multiple splash screens that are named 'splashxx.png' where
-'xx' is any 2 digit number. (Note: The script will continue past number 99 and will actually work up to a rotation number of 999.)
+'xx' is any 2 digit number. (Note: The script will continue to work up to a rotation number of 999.
+Any file number beyond 999 will be ignored.)
 
-For example: if the user had 10 different splash screens (in the 'images' folder on the SD card) named 'splash01.png'
-thru 'splash10.png', running the script 'SplashRotate.Lua' will copy 'splash01.png' to 'splash.png' (this will then be the next splash screeen to
-be displayed on the next powerup). 'splash01.png' is then renamed to highest number + 1. In this example it
-will be renamed 'splash11.png'. (The lowest number splash screen will become the next 'splash.png' and then the lowest
-splash screen will then be renamed to the higest number +1.)
+## Environment
 
-## INSTALLATION
+  - Radio Master TX16S MK2 with a color display of 480 x 272
+  - EdgeTX 2.11+ using LVGL
 
-Copy the SplashRotate.lua file to /SCRIPTS/TOOLS/SplashRotate.lua  (on the radio's SD card).
-The 'TOOLS' menu will now have a 'SplashRotate' button, click the button to run the script.
+## Example Rotation
 
-## USAGE
+If the user has 10 different splash screens (in the 'images' folder on the SD card) named 'splash01.png'
+thru 'splash10.png', running the script 'SplashRotateV23.lua' will simply rotate thru the files.
+All files names will be demoted by one number and the current 'splash.png' will move to 'splash10.png'.
 
-Radio Menu → Tools → SplashRotate
+## Installation
+
+Copy the 'SplashRotateV23.lua' file into /SCRIPTS/TOOLS/ directory on the radio's SD card.
+The 'TOOLS' menu will now have a 'SplashRotate V2.3' button = click the button to run the script.
+
+## Usage
+
+Radio Menu → Tools → SplashRotate V2.3
 
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/ToolsSplashRotate.png)
 
-  - Click the 'SplashRotate' button to run the script.
-  - After a breif 'Loading...' screen the the script will display the following screen.
-    
-![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateDisplay.png)  
+  - Click the 'SplashRotate V2.3' button to run the script.
+     
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateWorking.png)  
 
-  - The 'Close' button will end the script and return to the 'Tools' menu.
-  - The 'Active' file name is the file that is the current splash screen.
-  - The 'Archive' number is the total number of splash screens in the rotation.
-  - The 'Highest' number is the number of the highest splash screen.
-  - The 'Highest' number is increased by 1 every time the script is run.
-  - If the splaash files are named 'splash01.png' thru 'splash10.png' and the 'SplashRotate' script is run, the files
-  will then be named 'splash02.png' thru 'splash11.png'. This rotation continues each time the 'SplashRotate' script is run.
-  The highest number that the script can handle is 999. The rotation number should be reset before this number is reached
-  by clicking the 'ArchiveCleanup' button.
-  - This script will function with any number of splash screens as long as the highest number does not reach 1000.  
+  - You will then see the 'Working' screen.
+  - It lets you know the splash files are being shifted (rotated).
+  - It shows you what splash file is currently being shifted and what it is being shifted to.
+  - It also shows you the total number of splash files - this process can take a few minutes when you have a large number
+  of splash files to shift.
   
-![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateArchiveDisplay.png)     
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/RotationCompletePage1.png)    
+
+  - When shifting is complete the summary page will be displayed. It shows what files were shifted and the total number
+  of files processed.
+  - If more than 3 files are in the rotation queue then you will see a 'Next' button - pressing the 'Next' button will
+  display the next 7 files in the queue.  
   
-  - Click the 'ArchiveCleanup' button to reset the rotation numbers back to their lowest numbers.
-  - For example is there are 10 splash screen files, they will be re-numbered 'splash01.png' thru 'splash10.png'
-  after the 'ArchiveCleanup' button is pressed.
-  - The 'Renumbered' field tells you how many splash screens are on your radio and what they have been re-numbered to.
-  
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/RotationCompletePage2.png)  
+
+  - Each successive summary page will have a 'Back', 'Next' and 'Close' button.   
+  - The 'Back' button will take you back to the previous summary page.
+  - The 'Next' button will take you to the next summary page (if one exists).
+  - The 'Close' button will exit the script and take you back to the 'Tools' menu.
+ 
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateWorkingClose.png)  
+
+  - If you press the 'Close' button on the 'Working' screen while the files are still being shifted, the script will finish
+  shifting all the files, then immediately close after the shifting process is complete, without displaying any summary page
+  and display the message 'Closing after rotation...'.
+
 ## License
 
  GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
