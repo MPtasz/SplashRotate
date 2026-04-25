@@ -28,15 +28,18 @@
 -- A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 --
 -- =============================================================================
--- SplashRotate.lua  v2.3.0
+-- SplashRotateV23.lua  v2.3.0
 --
 -- Rotation: shift-all-down by one using one temp file.
 --
---   BEFORE:  splash.png  splash01  splash02  ...  splashN
---   AFTER:   splash.png  splash01  splash02  ...  splashN
---   (where)  (was 01)    (was 02)  (was 03)       (was splash.png)
+--   splash01 --> splashtmp
+--   splash02 --> splash01
+--   splash03 --> splash02
+--   splash04 --> splash03
+--   
+--   this continues until the highest number is reached
 --
--- Total file count stays constant
+--   then splashtmp --> splash
 --
 -- State machine phases (in order):
 --   "scan"    Scan for highest numbered file; validate preconditions.
@@ -48,8 +51,8 @@
 --   "done"    Build file list, call showPage1(), stop.
 --
 -- Place in /SCRIPTS/TOOLS/. Run from EdgeTX Tools menu.
--- EdgeTX 2.11.5
--- EdgeTX Lua Reference 2.11
+-- EdgeTX 2.11+
+-- EdgeTX Lua Reference 5.3
 -- =============================================================================
  
 local IMG_DIR     = "/images"
@@ -198,7 +201,7 @@ showPage1 = function()
   else
     lines[#lines + 1] = s
   end
-  -- File queue
+  -- File queue -----------------------------------------------------------
   lines[#lines + 1] = "File queue (" .. #fileList .. " files  in  " .. IMG_DIR .. "):"
   if fileList[1] then
     lines[#lines + 1] = "  " .. fileList[1].label
