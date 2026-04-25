@@ -13,7 +13,8 @@
 EdgeTX allows a splash screen ('splash.png' in the SD Card 'images' folder) to be displayed on radio powerup.
 This script allows the user to rotate between multiple splash screens that are named 'splashxx.png' where
 'xx' is any 2 digit number. (Note: The script will continue to work up to a rotation number of 999.
-Any file number beyond 999 will be ignored.)
+Any file number beyond 999 will be ignored.) The script works with contiguous numbered splash files. If
+there is a gap in the numbering sequence processing stops at the gap and any further files are ignored.
 
 ## Environment
 
@@ -24,12 +25,12 @@ Any file number beyond 999 will be ignored.)
 
 If the user has 10 different splash screens (in the 'images' folder on the SD card) named 'splash01.png'
 thru 'splash10.png', running the script 'SplashRotateV23.lua' will simply rotate thru the files.
-All files names will be demoted by one number and the current 'splash.png' will move to 'splash10.png'.
+All file names will be demoted by one number and the current 'splash.png' will move to 'splash10.png'.
 
 ## Installation
 
 Copy the 'SplashRotateV23.lua' file into /SCRIPTS/TOOLS/ directory on the radio's SD card.
-The 'TOOLS' menu will now have a 'SplashRotate V2.3' button = click the button to run the script.
+The 'TOOLS' menu will now have a 'SplashRotate V2.3' button - click the button to run the script.
 
 ## Usage
 
