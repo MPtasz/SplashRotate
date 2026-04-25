@@ -20,6 +20,7 @@ there is a gap in the numbering sequence processing stops at the gap and any fur
 
   - Radio Master TX16S MK2 with a color display of 480 x 272
   - EdgeTX 2.11+ using LVGL
+  - EdgeTX Lua Reference 5.3
 
 ## Example Rotation
 
