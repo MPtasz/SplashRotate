@@ -49,15 +49,12 @@ Radio Menu → Tools → SplashRotate V2.3
   - It also shows you the total number of splash files - this process can take a few minutes when you have a large number
   of splash files to shift.
   
-![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/RotationCompletePage1.png)    
+![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/RotationComplete.png)    
 
   - When shifting is complete the summary page will be displayed. It shows what files were shifted and the total number
   of files processed.
   - If more than 3 files are in the rotation queue then you will see a 'Next' button - pressing the 'Next' button will
   display the next 7 files in the queue.  
-  
-![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/RotationCompletePage2.png)  
-
   - Each successive summary page will have a 'Back', 'Next' and 'Close' button.   
   - The 'Back' button will take you back to the previous summary page.
   - The 'Next' button will take you to the next summary page (if one exists).
