@@ -54,10 +54,9 @@ Radio Menu → Tools → SplashRotate V2.3
   - When shifting is complete the summary page will be displayed. It shows what files were shifted and the total number
   of files processed.
   - The 'Close' button will end the script take you back to the 'Tools' menu.
+  - The 'View Splash ->' button will display the splash screen that will be displayed the next time the radio is booted/powered up.  
   
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/NextSplash.png)  
-  
-  - The 'View Splash ->' button will display the splash screen that will be displayed the next time the radio is booted/powered up.
  
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateWorkingClose.png)  
 
