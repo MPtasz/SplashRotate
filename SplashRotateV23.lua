@@ -35,10 +35,6 @@
 --   splash.png -> splashN
 --   splash_tmp -> splash.png
 --
--- File browser: one page per file built from run() (never from inside an
--- LVGL event handler).  Button press sets pendingIdx; the next run() call
--- builds the page with lvgl.page() + pg:image().
---
 -- Place in /SCRIPTS/TOOLS/.
 -- EdgeTX 2.11+
 -- =============================================================================
@@ -48,7 +44,7 @@ local BASE    = "splash"
 local EXT     = ".png"
 local MAX_N   = 999
  
-local BTN_Y   = 7
+local BTN_Y   = 7    -- buttom top (below top bar)
 local IMG_Y   = 48   -- image top (below button row)
  
 local exitApp   = false
@@ -68,13 +64,12 @@ local spinIdx   = 1
 local statusLbl = nil
 local exitLbl   = nil
  
--- Navigation state
 local pendingIdx = nil   -- non-nil means build this page next run() call
 local browserIdx = 1
  
 -- ---- helpers ---------------------------------------------------------------
  
-local function imgPath(n)
+local function imgPath(n)   -- returns the full file path for a splash file. n=0 returns /images/splash.png, any other n returns /images/splashNN.png
   if n == 0 then return IMG_DIR .. "/" .. BASE .. EXT end
   return IMG_DIR .. "/" .. BASE .. string.format("%02d", n) .. EXT
 end
@@ -82,14 +77,14 @@ end
 local tmpPath     = IMG_DIR .. "/splash_tmp" .. EXT
 local previewTmp  = IMG_DIR .. "/splash_pv"  .. EXT   -- preview copy of splash01
  
-local function exists(path) return fstat(path) ~= nil end
+local function exists(path) return fstat(path) ~= nil end  -- returns true if the file exists by calling fstat()
  
-local function spin()
+local function spin()  --  advances spinIdx and returns the next spinner character for the working-screen animation
   spinIdx = (spinIdx % #spinChars) + 1
   return spinChars[spinIdx]
 end
  
-local function fileSizeStr(path)
+local function fileSizeStr(path)  -- returns a human-readable file size string (B, KB, MB). Currently unused — leftover from the browser approach
   local st = fstat(path)
   if not st then return "?" end
   local sz = st.size or 0
@@ -100,7 +95,7 @@ end
  
 -- ---- file I/O --------------------------------------------------------------
  
-local function copyFile(src, dst)
+local function copyFile(src, dst)  -- copies a file byte by byte using EdgeTX's functional-form io API; returns true/nil on success or false/error string on failure
   local inF = io.open(src, "r")
   if not inF then return false, "cannot open " .. src end
   local outF = io.open(dst, "w")
@@ -114,7 +109,7 @@ local function copyFile(src, dst)
   return true, nil
 end
  
-local function renameFile(src, dst)
+local function renameFile(src, dst)  -- copies src to dst then deletes src; effectively a rename. Returns true/nil or false/error
   local ok, err = copyFile(src, dst)
   if not ok then del(dst); return false, err end
   del(src); return true, nil
@@ -122,7 +117,7 @@ end
  
 -- ---- file list -------------------------------------------------------------
  
-local function buildFileList()
+local function buildFileList()  -- scans for all splash files and returns a table of {label, path} entries. Currently unused — leftover from the browser approach
   local list = {}
   if exists(imgPath(0)) then
     list[#list + 1] = { label = "splash.png  [ACTIVE]", path = imgPath(0) }
@@ -143,7 +138,7 @@ end
  
 local showStatusPage, showPreviewPage
 
-showPreviewPage = function()
+showPreviewPage = function()  -- builds the preview page showing splash_pv.png with Back and Close buttons
   local pg = lvgl.page({
     title    = "SplashRotate  v2.3",
     subtitle = "Splash screen on next boot",
@@ -157,7 +152,7 @@ showPreviewPage = function()
     file = previewTmp, fill = false })
 end
 
-showStatusPage = function()
+showStatusPage = function()  --  builds the post-rotation status page showing the result text, Close button, and "View Splash ->" button if rotation succeeded
   pendingIdx = nil
 
   local pg = lvgl.page({
@@ -185,7 +180,7 @@ end
  
 -- ---- init ------------------------------------------------------------------
  
-local function init()
+local function init()  -- builds the initial working page with the spinner label and Close button; called once by EdgeTX when the script launches
   if lvgl == nil then return end
   local pg = lvgl.page({
     title    = "Splash Rotator  v2.3",
@@ -206,7 +201,7 @@ end
  
 -- ---- run -------------------------------------------------------------------
  
-local function run(event, touchState)
+local function run(event, touchState)  -- called every frame by EdgeTX; drives the rotation state machine during rotation, then watches exitApp during idle; cleans up previewTmp before exiting
   if lvgl == nil then
     lcd.clear()
     lcd.drawText(10, 20, "Splash Rotator v2.3", MIDSIZE)
@@ -240,9 +235,6 @@ local function run(event, touchState)
     end
  
   elseif phase == "temp" then
-    -- Save a copy of splash01.png as the preview file BEFORE renaming anything.
-    -- LVGL caches splash.png at boot; displaying previewTmp (a different path)
-    -- bypasses that stale cache and shows the correct new active image.
     copyFile(imgPath(1), previewTmp)
     local ok, err = copyFile(imgPath(1), tmpPath)
     if not ok then
