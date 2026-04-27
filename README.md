@@ -53,12 +53,8 @@ Radio Menu → Tools → SplashRotate V2.3
 
   - When shifting is complete the summary page will be displayed. It shows what files were shifted and the total number
   of files processed.
-  - If more than 3 files are in the rotation queue then you will see a 'Next' button - pressing the 'Next' button will
-  display the next 7 files in the queue.  
-  - Each successive summary page will have a 'Back', 'Next' and 'Close' button.   
-  - The 'Back' button will take you back to the previous summary page.
-  - The 'Next' button will take you to the next summary page (if one exists).
-  - The 'Close' button will exit the script and take you back to the 'Tools' menu.
+  - The 'Close' button will end the script take you back to the 'Tools' menu.
+  - The 'View Splash ->' button will display the splash screen that will be displayed the next time the radio is booted/powered up.
  
 ![Tools/SplashRotate](https://github.com/MPtasz/SplashRotate/blob/main/assets/ScreenShots/SplashRotateWorkingClose.png)  
 
