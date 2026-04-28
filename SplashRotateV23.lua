@@ -64,8 +64,9 @@ local spinIdx   = 1
 local statusLbl = nil
 local exitLbl   = nil
  
-local pendingIdx = nil   -- non-nil means build this page next run() call
+local pendingIdx = nil
 local browserIdx = 1
+local previewAttempt = 0  -- 1=first build (evicts cache), 2=second build (correct)
  
 -- ---- helpers ---------------------------------------------------------------
  
@@ -75,7 +76,8 @@ local function imgPath(n)   -- returns the full file path for a splash file. n=0
 end
  
 local tmpPath     = IMG_DIR .. "/splash_tmp" .. EXT
-local previewTmp  = IMG_DIR .. "/splash_pv"  .. EXT   -- preview copy of splash01
+local counterFile = "/SCRIPTS/TOOLS/splash_pvc.txt"
+local previewTmp  = ""   -- set in init() from counter file, format: /images/pvNN.png max pv99.png
  
 local function exists(path) return fstat(path) ~= nil end  -- returns true if the file exists by calling fstat()
  
@@ -138,13 +140,13 @@ end
  
 local showStatusPage, showPreviewPage
 
-showPreviewPage = function()  -- builds the preview page showing splash_pv.png with Back and Close buttons
+showPreviewPage = function()
   local pg = lvgl.page({
     title    = "SplashRotate  v2.3",
     subtitle = "Splash screen on next boot",
     back     = function() showStatusPage() end,
   })
-  pg:button({ x=10, y=7, w=100, text="<- Back",
+  pg:button({ x=10,  y=7, w=100, text="<- Back",
     press = function() showStatusPage() end })
   pg:button({ x=340, y=7, w=100, text="Close",
     press = function() exitApp = true end })
@@ -180,7 +182,28 @@ end
  
 -- ---- init ------------------------------------------------------------------
  
-local function init()  -- builds the initial working page with the spinner label and Close button; called once by EdgeTX when the script launches
+local function init()
+  -- Read counter, delete old preview file, write new counter, set new preview path.
+  -- Using a unique filename each run bypasses LVGL's RAM image cache.
+  local oldName = ""
+  local newNum  = 0
+  local f = io.open(counterFile, "r")
+  if f then
+    local s = io.read(f, 20)
+    io.close(f)
+    local num, name = string.match(s, "(%d+):(.+)")
+    if num and name then
+      oldName = name
+      newNum  = (tonumber(num) + 1) % 100   -- cap at 99, wraps to 0
+    end
+  end
+  del(oldName)
+  previewTmp = IMG_DIR .. "/pv" .. string.format("%02d", newNum) .. EXT
+  local f2 = io.open(counterFile, "w")
+  if f2 then
+    io.write(f2, tostring(newNum) .. ":" .. previewTmp)
+    io.close(f2)
+  end
   if lvgl == nil then return end
   local pg = lvgl.page({
     title    = "Splash Rotator  v2.3",
@@ -211,7 +234,7 @@ local function run(event, touchState)  -- called every frame by EdgeTX; drives t
   end
  
   if phase == "idle" then
-    if exitApp then del(previewTmp); return 2 end
+    if exitApp then return 2 end
     return 0
   end
  
